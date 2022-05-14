@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  kamehouse-postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "kamehouse!"
+    ports:
+      - "15432:5432"
+    networks:
+      - postgres-compose-network
+
+  kamehouse-pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "tiago.iwamoto@kamehouse.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "kamehouse!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - kamehouse-postgres
+    networks:
+      - postgres-compose-network
+
+networks:
+  postgres-compose-network:
+    driver: bridge
